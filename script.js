@@ -135,3 +135,4 @@ uploadForm.addEventListener("submit", (e) => {
 
     // También puedes enviar los datos al servidor o realizar otras acciones según tus necesidades
 });
+    //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

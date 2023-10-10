@@ -18,24 +18,28 @@
     <aside id="sidebar">
         <!-- Aquí se muestran los perfiles de los usuarios que sigues -->
     </aside>
-    <form id="uploadForm" class="hidden">
-        <h2>Subir Memoria</h2>
-        <label for="usuarioId">ID de Usuario:</label>
-        <input type="text" id="usuarioId" name="usuarioId" required>
-        <label for="tipo">Tipo:</label>
-        <select id="tipo" name="tipo">
-            <option value="foto">Foto</option>
-            <option value="video">Video</option>
-        </select>
-        <button id="capturePhoto" type="button">Tomar Foto</button>
-        <canvas id="photoCanvas" style="display: none;"></canvas>
-        <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
-        <label for="nota">Nota:</label>
-        <textarea id="nota" name="nota" rows="4" required></textarea>
-        <button type="submit">Subir</button>
-        <button id="closeForm" type="button">Cerrar</button>
-    </form>
-    
+<form id="uploadForm" class="hidden">
+    <h2>Subir Memoria</h2>
+    <label for="usuarioId">ID de Usuario:</label>
+    <input type="text" id="usuarioId" name="usuarioId" required>
+    <label for="tipo">Tipo:</label>
+    <select id="tipo" name="tipo">
+        <option value="foto">Foto</option>
+        <option value="video">Video</option>
+    </select>
+    <button id="startCamera" type="button">Iniciar Cámara</button>
+    <video id="cameraPreview" style="display: none;" autoplay></video>
+    <button id="capturePhoto" type="button" style="display: none;">Capturar Foto</button>
+    <canvas id="photoCanvas" style="display: none;"></canvas>
+    <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+    <br>
+    <br>
+    <label for="nota">Nota:</label>
+    <textarea id="nota" name="nota" rows="4" required></textarea>
+    <button type="submit">Subir</button>
+    <button id="closeForm" type="button">Cerrar</button>
+</form>
+
     
       
     <footer>
