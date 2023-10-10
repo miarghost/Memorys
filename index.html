@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>MEMORYS</title>
+</head>
+<body>
+    <header>
+        <h1>MEMORYS</h1>
+        <button id="uploadButton">Subir Memoria</button>
+    </header>
+    <section id="feed">
+        <!-- Aquí se muestran las memorias de los usuarios que sigues -->
+    </section>
+    <aside id="sidebar">
+        <!-- Aquí se muestran los perfiles de los usuarios que sigues -->
+    </aside>
+    <form id="uploadForm" class="hidden">
+        <h2>Subir Memoria</h2>
+        <label for="usuarioId">ID de Usuario:</label>
+        <input type="text" id="usuarioId" name="usuarioId" required>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo">
+            <option value="foto">Foto</option>
+            <option value="video">Video</option>
+        </select>
+        <button id="capturePhoto" type="button">Tomar Foto</button>
+        <canvas id="photoCanvas" style="display: none;"></canvas>
+        <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+        <label for="nota">Nota:</label>
+        <textarea id="nota" name="nota" rows="4" required></textarea>
+        <button type="submit">Subir</button>
+        <button id="closeForm" type="button">Cerrar</button>
+    </form>
+    
+    
+      
+    <footer>
+        <p>&copy; 2023 Memorys</p>
+    </footer>
+</body>
+</html>
