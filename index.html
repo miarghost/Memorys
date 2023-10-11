@@ -10,25 +10,26 @@
     <header>
         <h1>MEMORYS</h1>
         <button id="uploadButton">Subir Memoria</button>
+       <!-- <button id="darkModeButton">Modo Oscuro</button>-->
     </header>
     <section id="feed">
         <!-- Aquí se muestran las memorias de los usuarios que sigues -->
     </section>
-    <aside id="sidebar">
-        <!-- Aquí se muestran los perfiles de los usuarios que sigues -->
-    </aside>
     <form id="uploadForm" class="hidden">
         <h2>Subir Memoria</h2>
         <label for="usuarioId">ID de Usuario:</label>
         <input type="text" id="usuarioId" name="usuarioId" required>
-        <label for="tipo">Tipo:</label>
-        <select id="tipo" name="tipo">
-            <option value="foto">Foto</option>
-            <option value="video">Video</option>
-        </select>
-        <button id="capturePhoto" type="button">Tomar Foto</button>
-        <canvas id="photoCanvas" style="display: none;"></canvas>
-        <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+
+        <div id="mediaContainer">
+            <div id="videoContainer"></div>
+            <div id="capturedImageContainer">
+                <canvas id="photoCanvas" style="display: none;"></canvas>
+                <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+            </div>
+        </div>
+        <center><button id="capturePhoto" type="button">Sacar Foto</button></center>    
+
+        <br><br>
         <label for="nota">Nota:</label>
         <textarea id="nota" name="nota" rows="4" required></textarea>
         <button type="submit">Subir</button>

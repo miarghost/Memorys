@@ -1,3 +1,8 @@
+// Variables globales para la cámara y el stream
+let video = null;
+let stream = null;
+let photoCanvas = null;
+
 // Simulando datos de usuarios y memorias
 const usuarios = [
     { id: 1, nombre: "Martin Tincho", fotoPerfil: "perfil.jpg" },
@@ -47,7 +52,7 @@ const closeFormButton = document.getElementById("closeForm");
 const usuarioIdInput = document.getElementById("usuarioId"); // Campo de ID de usuario
 const tipoInput = document.getElementById("tipo");
 const capturePhotoButton = document.getElementById("capturePhoto");
-const photoCanvas = document.getElementById("photoCanvas");
+photoCanvas = document.getElementById("photoCanvas");
 const capturedImage = document.getElementById("capturedImage");
 const notaInput = document.getElementById("nota");
 
@@ -56,47 +61,74 @@ const uploadButton = document.getElementById("uploadButton");
 uploadButton.addEventListener("click", () => {
     // Mostrar el formulario
     uploadForm.classList.remove("hidden");
-    // Restaurar elementos ocultos
+    startCamera(); // Iniciar la cámara cuando abres el formulario
     capturedImage.style.display = "none";
+    capturedImage.src = ""; // Limpiar la imagen previamente capturada
     photoCanvas.style.display = "none";
-});
-
-// Manejar clic en el botón "Tomar Foto"
-capturePhotoButton.addEventListener("click", () => {
-    // Mostrar la cámara y ocultar otros elementos
-    photoCanvas.style.display = "block";
-    capturedImage.style.display = "none";
-
-    // Capturar una foto desde la cámara y mostrarla en el canvas
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function (stream) {
-            const video = document.createElement('video');
-            document.body.appendChild(video);
-            video.srcObject = stream;
-            video.onloadedmetadata = function (e) {
-                video.play();
-                photoCanvas.width = video.videoWidth;
-                photoCanvas.height = video.videoHeight;
-                const context = photoCanvas.getContext('2d');
-                context.drawImage(video, 0, 0, photoCanvas.width, photoCanvas.height);
-                video.srcObject.getVideoTracks()[0].stop();
-                video.remove();
-                capturedImage.src = photoCanvas.toDataURL('image/png');
-                capturedImage.style.display = "block";
-                photoCanvas.style.display = "none";
-            };
-        })
-        .catch(function (err) {
-            console.error('Error al acceder a la cámara:', err);
-        });
 });
 
 // Manejar clic en el botón "Cerrar"
 closeFormButton.addEventListener("click", () => {
-    // Ocultar el formulario y restaurar elementos ocultos
+    // Ocultar el formulario y detener la cámara
     uploadForm.classList.add("hidden");
     capturedImage.style.display = "none";
     photoCanvas.style.display = "none";
+    stopCamera(); // Detener la cámara cuando cierras el formulario
+});
+
+// Función para iniciar la cámara
+function startCamera() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const constraints = { video: true };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (mediaStream) {
+                stream = mediaStream;
+                video = document.createElement("video");
+                video.style.height = "40%";
+                video.setAttribute("id", "video");
+                video.srcObject = mediaStream;
+                video.onloadedmetadata = function (e) {
+                    video.play();
+                };
+                const videoContainer = document.getElementById("videoContainer");
+                videoContainer.innerHTML = ""; // Limpiar cualquier instancia previa de la cámara
+                videoContainer.appendChild(video);
+            })
+            .catch(function (error) {
+                console.error("Error al acceder a la cámara: " + error);
+            });
+    } else {
+        console.error("getUserMedia no está disponible en este navegador");
+    }
+}
+
+// Función para detener la cámara
+function stopCamera() {
+    if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(function (track) {
+            track.stop();
+        });
+    }
+    if (video) {
+        video.pause();
+        video.srcObject = null;
+    }
+}
+
+// Manejar clic en el botón "Tomar Foto"
+capturePhotoButton.addEventListener("click", () => {
+    if (video) {
+        photoCanvas.width = video.videoWidth;
+        photoCanvas.height = video.videoHeight;
+        const context = photoCanvas.getContext('2d');
+        context.drawImage(video, 0, 0, photoCanvas.width, photoCanvas.height);
+        stopCamera(); // Detener la cámara después de tomar la foto
+        capturedImage.src = photoCanvas.toDataURL('image/png');
+        capturedImage.style.display = "block";
+        photoCanvas.style.display = "none";
+        document.getElementById("video").style.display = "none";
+    }
 });
 
 // Manejar envío del formulario
@@ -105,7 +137,7 @@ uploadForm.addEventListener("submit", (e) => {
 
     // Obtener los valores del formulario
     const usuarioId = usuarioIdInput.value;
-    const tipo = tipoInput.value;
+    const tipo = "foto";
     const contenido = capturedImage.src; // Usar la imagen capturada como contenido
     const nota = notaInput.value;
 
