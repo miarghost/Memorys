@@ -27,11 +27,20 @@
                 <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
             </div>
         </div>
-        <center><button id="capturePhoto" type="button">Sacar Foto</button></center>    
-
+        <center><div style="border: 2px solid black; border-radius: 50%; display: inline-block;">
+            <button id="capturePhoto" type="button" style="border: transparent; background: none; padding: 0; border-radius: 50%;"><img src="camara.png" style="max-width: 100%; max-height: 100%; width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"></button>   
+        </div></center>
         <br><br>
-        <label for="nota">Nota:</label>
-        <textarea id="nota" name="nota" rows="4" required></textarea>
+        <center>
+            <div id="mic-container" style="border: 2px solid blue; border-radius: 50%; display: inline-block;">
+                <button type="button" onclick="runSpeechRecog()" style="border: transparent; background: none; padding: 0; border-radius: 50%;">
+                    <img id="mic-icon" src="pngegg.png" alt="" style="max-width: 100%; max-height: 100%; width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                </button>
+            </div>
+        </center>
+        
+
+         <h3 id="output" id="nota" class="hide"></h3>
         <button type="submit">Subir</button>
         <button id="closeForm" type="button">Cerrar</button>
     </form>
@@ -41,5 +50,11 @@
     <footer>
         <p>&copy; 2023 Memorys</p>
     </footer>
+
+
+
+
+
+
 </body>
 </html>

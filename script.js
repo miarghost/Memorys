@@ -2,6 +2,7 @@
 let video = null;
 let stream = null;
 let photoCanvas = null;
+let listening = false;
 
 // Simulando datos de usuarios y memorias
 const usuarios = [
@@ -139,8 +140,10 @@ uploadForm.addEventListener("submit", (e) => {
     const usuarioId = usuarioIdInput.value;
     const tipo = "foto";
     const contenido = capturedImage.src; // Usar la imagen capturada como contenido
-    const nota = notaInput.value;
-
+    const nota = transcript0;
+    transcript0 = "";
+    primVez = true;
+    var output = document.getElementById('output').innerHTML = " ";
     // Verificar si el usuario existe
     const usuario = findUserById(usuarioId);
 
@@ -168,3 +171,67 @@ uploadForm.addEventListener("submit", (e) => {
     // También puedes enviar los datos al servidor o realizar otras acciones según tus necesidades
 });
     //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
+
+
+
+
+    var transcript;
+    var transcript0;
+    var output = document.getElementById('output');
+    var primVez = true;
+
+
+
+    function updateMicIcon() {
+        const micIcon = document.getElementById("mic-icon");
+        const micContainer = document.getElementById("mic-container");
+    
+        if (listening) {
+            micIcon.classList.add("listening");
+            micContainer.style.border = "2px solid lightblue"; // Cambia el color del borde
+        } else {
+            micIcon.classList.remove("listening");
+            micContainer.style.border = "2px solid blue"; // Restaura el color del borde original
+        }
+    }
+
+
+ runSpeechRecog = () => {
+    listening = !listening; 
+    updateMicIcon();
+    document.getElementById("output").innerHTML = "Loading text...";
+    var output = document.getElementById('output');
+    var action = document.getElementById('action');
+    let recognization = new webkitSpeechRecognition();
+    recognization.onstart = () => {
+            action.innerHTML = "Listening...";
+
+    }
+    recognization.onresult = (e) => {
+        listening = !listening; 
+        updateMicIcon();
+       transcript = e.results[0][0].transcript;
+
+        if(primVez){
+            transcript0 = transcript;
+        }
+       if(primVez){
+        output.innerHTML = transcript + " "+ "<img onclick='borrarMsj()' src='borrar.png' style='max-width: 5%; max-height: 5%;'>";
+       output.classList.remove("hide")
+       primVez=false;
+       } else{
+        escribirMensaje();
+       }
+    }
+    recognization.start();
+ }
+ function escribirMensaje(){
+        transcript0=transcript0+" "+transcript;
+        output.innerHTML = " "+transcript0 + " " + "<img onclick='borrarMsj()' src='borrar.png' style='max-width: 5%; max-height: 5%;'>";
+ }
+
+ function borrarMsj(){
+    output.innerHTML = " ";
+    primVez = true;
+    transcript0 = " ";
+ }

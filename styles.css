@@ -262,6 +262,11 @@ form button:hover {
 }
 
 
+.listening {
+  width: 60px; /* Ancho mayor */
+  height: 60px; /* Alto mayor */
+  background: lightblue; /* Color de fondo azul claro */
+}
 
 
 
