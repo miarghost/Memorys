@@ -3,6 +3,8 @@ let video = null;
 let stream = null;
 let photoCanvas = null;
 let listening = false;
+const soundBar = document.getElementById("soundBar");
+soundBar.style.visibility = "hidden"; 
 
 // Simulando datos de usuarios y memorias
 const usuarios = [
@@ -189,9 +191,13 @@ uploadForm.addEventListener("submit", (e) => {
         if (listening) {
             micIcon.classList.add("listening");
             micContainer.style.border = "2px solid lightblue"; // Cambia el color del borde
+            micContainer.style.visibility = "hidden"; // Cambia el color del borde
+            soundBar.style.visibility = "visible";
         } else {
             micIcon.classList.remove("listening");
             micContainer.style.border = "2px solid blue"; // Restaura el color del borde original
+            micContainer.style.visibility = "visible"; // Cambia el color del borde
+            soundBar.style.visibility = "hidden";
         }
     }
 
@@ -205,7 +211,6 @@ uploadForm.addEventListener("submit", (e) => {
     let recognization = new webkitSpeechRecognition();
     recognization.onstart = () => {
             action.innerHTML = "Listening...";
-
     }
     recognization.onresult = (e) => {
         listening = !listening; 
